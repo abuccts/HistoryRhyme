@@ -1,0 +1,8 @@
+@font-face {
+    font-family: oldEnglish;
+    src: url(fonts/oldenglish.ttf);
+}
+
+#banner h1 {
+    font-family: oldEnglish;
+}
