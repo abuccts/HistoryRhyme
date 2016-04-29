@@ -21,87 +21,94 @@
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
-	<div class="column">
-		<h2 class="ui header">Results about</h2>
-		<div class="ui form">
-			<div class="five fields">
-				<div class="field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name" disabled="true">
-				</div>
-				<div class="disabled field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name">
-				</div>
-				<div class="disabled field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name">
-				</div>
-				<div class="disabled field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name">
-				</div>
-				<div class="disabled field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name">
-				</div>
+		<div class="column">
+			<h2 class="ui dividing header">Results about</h2>
+			<div class="ui form">
+				<div id="resultForm" class="five fields"></div>
 			</div>
 		</div>
-	</div>
-	
-	<div class="column">
-	<div class="ui piled segment">
-		<div class="ui divided list list-group">
-  <div class="item list-group-item">
-    <div class="right floated content">
-      <div class="ui red label">Red</div>
-    </div>
-   <a class="list-link">&nbsp;</a>
-    <div class="content event-content">
-      Lena
-    </div>
-  </div>
-    <div class="item list-group-item">
-    <div class="right floated content">
-      <div class="ui blue label">Blue</div>
-    </div>
-   <a class="list-link">&nbsp;</a>
-    <div class="content event-content">
-      Lena
-    </div>
-  </div>
-   <div class="item list-group-item">
-    <div class="right floated content">
-      <div class="ui yellow label">Yellow</div>
-    </div>
-   <a class="list-link">&nbsp;</a>
-    <div class="content event-content">
-      Lena
-    </div>
-  </div>
-  </div>
-</div>
-</div>
+		
+		<div class="column">
+			<div class="ui piled segment">
+				<div id="resultList" class="ui divided list list-group"></div>
+			</div>
+		</div>
+		
+		<div class="center aligned column">
+			<button id="prevBtn" class="ui left labeled icon button">
+				<i class="left arrow icon"></i> Prev
+			</button>
+			<button id="nextBtn" class="ui right labeled icon button">
+				<i class="right arrow icon"></i> Next
+			</button>
+		</div>
 
-<div class="center aligned column">
-<button class="ui left labeled icon button">
-  <i class="left arrow icon"></i>
-  Prev
-</button>
-<button class="ui right labeled icon button">
-  <i class="right arrow icon"></i>
-  Next
-</button>
-</div>
-
-	</div>
-	
 	</div>
 
 	<!-- javascript -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/semantic.min.js"></script>
+	<script type="text/javascript" src="js/parseUri.js"></script>
+	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
+		var querylistJsonUrl = 'json/querylist.json';
+		var resultJsonUrl = 'json/result.json';
+		
+		var querylistData = undefined;
+		var resultData = undefined;
+		
+		var fields = ['object', 'scene', 'period', 'person', 'verb'];
+		var pageItemNum = 4;
+		
+		$(document).ready(function() {
+			var url = window.location.href;
+			
+			var query = fields.map(function(field) {
+				return parseUri(url).queryKey[field];
+			});
+			
+			$.getJSON(querylistJsonUrl, function(d) {
+				querylistData = d;
+				var resultForm = new mkform($('#resultForm'), d, fields, function() {
+					$.each(fields, function(id, field) {
+						if (id < 4) {
+							$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
+							$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
+						} else {
+							$('#resultForm').form('set value', 'verb', query[id]);
+							$('#' + fields[id] + 'Input').attr('disabled', true);
+						}
+					});
+				});
+			});
+			
+			var pageNum = 0;
+			var totalPage = 0;
+			
+			$.getJSON(resultJsonUrl, function(d) {
+				resultData = d;
+				if (d.length % pageItemNum == 0) {
+					totalPage = parseInt(d.length / pageItemNum);
+				} else {
+					totalPage = parseInt(d.length / pageItemNum) + 1;
+				}	
+				var resultList = new mklist($('#resultList'), d, [pageNum, pageItemNum]);
+				
+				$('#prevBtn').click(function() {
+					if (pageNum > 0) {
+						pageNum --;
+						resultList = mklist($('#resultList'), d, [pageNum, pageItemNum]);
+					}
+				});
+				$('#nextBtn').click(function() {
+					if (pageNum < totalPage - 1) {
+						pageNum ++;
+						resultList = mklist($('#resultList'), d, [pageNum, pageItemNum]);
+					}
+				});
+			});
+			
+		});	
 	
 	</script>
 </body>

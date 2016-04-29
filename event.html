@@ -10,8 +10,9 @@
 	<title>Demo</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="css/lightslider.min.css">
 	<link rel="stylesheet" type="text/css" href="css/banner.css">
-	<link rel="stylesheet" type="text/css" href="css/result.css">
+	<link rel="stylesheet" type="text/css" href="css/event.css">
 </head>
 
 <body>
@@ -21,49 +22,70 @@
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
-	<div class="ten wide column">
-		<h4 class="ui dividing header">
-	  American Civil War : A day after Union forces capture Richmond, Virginia , U.S. President Abraham Lincoln visits the Confederate capital.
-		</h4>
-		<div class="ui form">
-  <div class="inline fields">
-    <label>TAGS</label>
-    <div class="field">
-      <div class="ui radio checkbox">
-        <input type="radio" name="1">
-        <label><a class="ui red label">Red</a></label>
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui radio checkbox">
-        <input type="radio" name="1">
-        <label><a class="ui blue label">Red</a></label>
-      </div>
-    </div>
-	<div class="field">
-      <div class="ui radio checkbox">
-        <input type="radio" name="1">
-        <label><a class="ui green label">Red</a></label>
-      </div>
-    </div>
-</div>
-	</div>
-	
-	</div>
-	
-	<div class="column">
+		<div class="twelve wide column">
+			<h4 id="descr" class="ui dividing header"></h4>
+			<div class="ui form">
+				<div class="fields">
+					<div class="one wide field">
+						<div class="ui circular large black label">Tags</div>
+					</div>
+					<div class="eleven wide field">
+						<div id="tags" class="inline fields"></div>
+					</div>
+					<div class="four wide field">
+						<a><i class="search icon"></i><u>search similar events</u></a>
+					</div>
+				</div>
+			</div>
+		</div>
 		
-	</div>
-	
+		<div class="center aligned column">
+			<h2 class="ui header">Famous Photos</h1>
+			<div id="iconic"></div>
+		</div>
+		
+		<div class="column">
+			<div class="facet-info">Facets</div>
+			<div id="facet" ></div>
+		</div>
 
-	</div>
-	
 	</div>
 
 	<!-- javascript -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/semantic.min.js"></script>
+	<script type="text/javascript" src="js/parseUri.js"></script>
+	<script type="text/javascript" src="js/lightslider.js"></script>
+	<script type="text/javascript" src="js/jquery.masonry.min.js"></script>
+	<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
+		var eventJsonRootUrl = 'json/';
+		
+		var eventData = undefined;
+		
+		var iconicCarouselWidth = 3;
+		var facetCascadeCols = 4;
+		var detailCarouselWidth = 4;
+		
+		$(document).ready(function() {
+			var url = window.location.href;
+			
+			var eid = parseUri(url).queryKey.eid;
+			var eventJsonUrl = eventJsonRootUrl + eid + '.json';
+			
+			$.getJSON(eventJsonUrl, function(d) {
+				eventData = d;
+				var tags = new mktags([$('#tags'), $('#descr')], d);
+				
+				var iconicCarousel = new Slide($('#iconic'), d['iconic'], iconicCarouselWidth, function(item) {
+					var imgUrl = commonUrls.imgRootUrl + item;
+					return '<li class="slide-img"><img src="' + imgUrl + '"></li>';
+				});
+				var facetCascade = new ExtendedCarousel($('#facet'), d['facet'], facetCascadeCols, 'facet');
+			});
+			
+		});	
 	
 	</script>
 </body>

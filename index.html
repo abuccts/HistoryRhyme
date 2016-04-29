@@ -20,29 +20,31 @@
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
-	<div class="column">
-		<h2 class="ui header">Tell me history events about</h2>
-		<div class="ui form">
-			<div id="queryform" class="five fields">
-				<div class="field">
-					<label>First name</label>
-					<input type="text" placeholder="First Name">
+		<div class="column">
+			<h2 class="ui dividing header">Tell me history events about</h2>
+			<div class="ui form">
+				<div id="queryForm" class="five fields"></div>
+				<div class="ui grid">
+					<div class="center aligned column">
+						<div class="ui buttons">
+							<button id="submitBtn" class="ui positive button">Submit</button>
+							<div class="or"></div>
+							<button id="clearBtn" class="ui button">Clear</button>
+						</div>
+					</div>
 				</div>
 			</div>
-			<button class="ui button" type="submit">Submit</button>
-			<button class="ui button" type="submit">Submit</button>
 		</div>
-	</div>
-	
-	<div class="column">
-		<table class="ui selectable fixed table">
-			<thead><tr>
-				<th><a class="ui blue tag label">Query Example</a></th>
-				<th></th><th></th><th></th><th></th>
-			</tr></thead>
-			<tbody id="exampleTable"></tbody>
-		</table>
-	</div>
+		
+		<div class="column">
+			<table class="ui selectable fixed table">
+				<thead><tr>
+					<th><a class="ui blue tag label">Query Example</a></th>
+					<th></th><th></th><th></th><th></th>
+				</tr></thead>
+				<tbody id="queryExampleTable"></tbody>
+			</table>
+		</div>
 	
 	</div>
 
@@ -57,20 +59,40 @@
 		var querylistData = undefined;
 		var exampleData = undefined;
 		
+		var fields = ['object', 'scene', 'period', 'person', 'verb'];
+		
 		$(document).ready(function() {
-//			$.getJSON(querylistJsonUrl, function(d) {
-//				querylistData = d;
-//				var queryForm = new form($('queryform'), d);
-//			});
+			$.getJSON(querylistJsonUrl, function(d) {
+				querylistData = d;
+				var queryForm = new mkform($('#queryForm'), d, fields, function() {
+					$('#clearBtn').click(function() {
+						$('.ui.dropdown').dropdown('clear');
+						$('#verbInput').val('');
+					});
+					$('#submitBtn').click(function() {
+						var resultUrl = 'result.html?';
+						var query = fields.map(function(field) {
+							return field + '=' + $('#queryForm').form('get value', field);
+						});
+						resultUrl += query.join('&');
+						window.location.href = resultUrl;
+					});
+				});
+			});
 		
 			$.getJSON(exampleJsonUrl, function(d) {
 				exampleData = d;
-				var queryExample = new table($('#exampleTable'), d, function(i) {
-					alert(i);
+				var queryExampleTable = new mktable($('#queryExampleTable'), d, function(i) {
+					$.each(i, function(id, item) {
+						if (id < 4) {
+							$('#' + fields[id] + 'Input').dropdown('set selected', item[0]);
+						} else {
+							$('#queryForm').form('set value', 'verb', item[1]);
+						}
+					});
 				});
 			});
-		});
-	
+		});	
 	
 	</script>
 </body>
