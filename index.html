@@ -70,7 +70,7 @@
 						$('#verbInput').val('');
 					});
 					$('#submitBtn').click(function() {
-						var resultUrl = 'result.html?';
+						var resultUrl = 'result.php?';
 						var query = fields.map(function(field) {
 							return field + '=' + $('#queryForm').form('get value', field);
 						});
