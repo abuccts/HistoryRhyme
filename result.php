@@ -107,34 +107,37 @@
 
 			var pageNum = 0;
 			var totalPage = 0;
-
-			if (resultData.length % pageItemNum == 0) {
-				totalPage = parseInt(resultData.length / pageItemNum);
-			} else {
-				totalPage = parseInt(resultData.length / pageItemNum) + 1;
-			}
-			var resultList = new mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
-
-			$('#prevBtn').click(function() {
-				if (pageNum > 0) {
-					pageNum --;
-					resultList = mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
+			
+			$.post("http://localhost:21230/search", query, function(data) {
+				resultData = data;
+				if (resultData.length % pageItemNum == 0) {
+					totalPage = parseInt(resultData.length / pageItemNum);
+				} else {
+					totalPage = parseInt(resultData.length / pageItemNum) + 1;
 				}
-			});
-			$('#nextBtn').click(function() {
-				if (pageNum < totalPage - 1) {
-					pageNum ++;
-					resultList = mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
-				}
-			});
+				var resultList = new mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
+
+				$('#prevBtn').click(function() {
+					if (pageNum > 0) {
+						pageNum --;
+						resultList = mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
+					}
+				});
+				$('#nextBtn').click(function() {
+					if (pageNum < totalPage - 1) {
+						pageNum ++;
+						resultList = mklist($('#resultList'), resultData, [pageNum, pageItemNum]);
+					}
+				});
+			}, "json");
 
 		});	
 	
 	</script>
-
-
+	
 	<?php
 	echo '<script type="text/javascript" src="json.php?'.$querystr.'"></script>';
 	?>
+	
 </body>
 </html>
