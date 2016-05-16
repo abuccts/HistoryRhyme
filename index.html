@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	
 	<!-- Site Properties -->
-	<title>Demo</title>
+	<title>History Rhyme</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="css/banner.css">
@@ -15,15 +15,15 @@
 
 <body>
 	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header">Demo Design</h1>
+		<h1 class="ui header">History Rhyme</h1>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="column">
-			<h2 class="ui dividing header">Tell me history events about</h2>
+			<h2 class="ui dividing header">Search history events </h2>
 			<div class="ui form">
-				<div id="queryForm" class="five fields"></div>
+				<div id="queryForm" class="inline fields"></div>
 				<div class="ui grid">
 					<div class="center aligned column">
 						<div class="ui buttons">
@@ -36,11 +36,10 @@
 			</div>
 		</div>
 		
-		<div class="column">
+		<div class="twelve wide column">
 			<table class="ui selectable fixed table">
 				<thead><tr>
-					<th><a class="ui blue tag label">Query Example</a></th>
-					<th></th><th></th><th></th><th></th>
+					<th><a class="ui blue tag label">Query Example</a></th><th></th><th></th>
 				</tr></thead>
 				<tbody id="queryExampleTable"></tbody>
 			</table>
@@ -59,15 +58,15 @@
 		var querylistData = undefined;
 		var exampleData = undefined;
 		
-		var fields = ['object', 'scene', 'period', 'person', 'verb'];
+		var fields = ['class', 'person', 'period'];
 		
 		$(document).ready(function() {
 			$.getJSON(querylistJsonUrl, function(d) {
 				querylistData = d;
-				var queryForm = new mkform($('#queryForm'), d, fields, function() {
+				var queryForm = new mkform($('#queryForm'), d, function() {
 					$('#clearBtn').click(function() {
+						$('.ui.search input').val('');
 						$('.ui.dropdown').dropdown('clear');
-						$('#verbInput').val('');
 					});
 					$('#submitBtn').click(function() {
 						var resultUrl = 'result.php?';
@@ -84,10 +83,10 @@
 				exampleData = d;
 				var queryExampleTable = new mktable($('#queryExampleTable'), d, function(i) {
 					$.each(i, function(id, item) {
-						if (id < 4) {
+						if (id > 0) {
 							$('#' + fields[id] + 'Input').dropdown('set selected', item[0]);
 						} else {
-							$('#queryForm').form('set value', 'verb', item[1]);
+							$('#queryForm').form('set value', 'class', item[1]);
 						}
 					});
 				});

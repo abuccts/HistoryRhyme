@@ -36,12 +36,10 @@ $type = 1;
 
     $querystr = "";
 
-    if (isset($_GET["object"])){
-        $object = $_GET["object"];
-        $scene  = $_GET["scene"];
-        $period = $_GET["period"];
-        $person = $_GET["person"];
-        $verb   = $_GET["verb"];
+	if (isset($_GET["class"])){
+		$class = $_GET["class"];
+		$person = $_GET["person"];
+		$period = $_GET["period"];
 
 
     }else{
@@ -58,11 +56,9 @@ $type = 1;
 
         $post_data = array(
 
-            'object' => $object,
-            'scene'  => $scene,
-            'period' => $period,
-            'person' => $person,
-            'verb'   => $verb
+            'class' => $class,
+			'person' => $person,
+            'period' => $period
 
         );
 

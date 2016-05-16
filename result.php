@@ -4,14 +4,12 @@
 
 	$querystr = "";
 
-	if (isset($_GET["object"])){
-		$object = $_GET["object"];
-		$scene  = $_GET["scene"];
-		$period = $_GET["period"];
+	if (isset($_GET["class"])){
+		$class = $_GET["class"];
 		$person = $_GET["person"];
-		$verb   = $_GET["verb"];
+		$period = $_GET["period"];
 
-		$querystr = 'object='.$object.'&scene='.$scene.'&period='.$period.'&person='.$person.'&verb='.$verb;
+		$querystr = 'class='.$class.'&person='.$person.'&period='.$period;
 	}else{
 
 		$type = 2;
@@ -28,7 +26,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	
 	<!-- Site Properties -->
-	<title>Demo</title>
+	<title>History Rhyme</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="css/banner.css">
@@ -37,15 +35,15 @@
 
 <body>
 	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header">Demo Design</h1>
+		<h1 class="ui header">History Rhyme</h1>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="column">
-			<h2 class="ui dividing header">Results about</h2>
+			<h2 class="ui dividing header">Result about hitory events</h2>
 			<div class="ui form">
-				<div id="resultForm" class="five fields"></div>
+				<div id="resultForm" class="inline fields"></div>
 			</div>
 		</div>
 		
@@ -74,12 +72,11 @@
 	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
 		var querylistJsonUrl = 'json/querylist.json';
-		var resultJsonUrl = 'json/result.json';
 		
 		var querylistData = undefined;
-		var resultData = "";
+		var resultData = undefined;
 		
-		var fields = ['object', 'scene', 'period', 'person', 'verb'];
+		var fields = ['class', 'person', 'period'];
 		var pageItemNum = 4;
 
 		function getResult(str) {
@@ -95,14 +92,14 @@
 			
 			$.getJSON(querylistJsonUrl, function(d) {
 				querylistData = d;
-				var resultForm = new mkform($('#resultForm'), d, fields, function() {
+				var resultForm = new mkform($('#resultForm'), d, function() {
 					$.each(fields, function(id, field) {
-						if (id < 4) {
+						if (id > 0) {
 							$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
 							$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
 						} else {
-							$('#resultForm').form('set value', 'verb', query[id]);
-							$('#' + fields[id] + 'Input').attr('disabled', true);
+							$('#resultForm').form('set value', 'class', query[id]);
+							$('#' + fields[id] + 'Input input').attr('disabled', true);
 						}
 					});
 				});

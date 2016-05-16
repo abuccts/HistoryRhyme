@@ -6,7 +6,7 @@ var commonUrls =
 
 var tagColors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey'];
 
-
+/*
 function mkform(rootEle, d, fields, processFunc) {
 	$.each(fields, function(i, field) {
 		$fieldDiv = $('<div class="field"></div>');
@@ -30,6 +30,49 @@ function mkform(rootEle, d, fields, processFunc) {
 		$fieldDiv.append($fieldInput);
 		rootEle.append($fieldDiv);
 	});
+	$('.ui.dropdown').dropdown();
+	processFunc();
+}
+*/
+
+function mkform(rootEle, d, processFunc) {
+	rootEle.html('<div class="two wide field"></div>' + 
+				'<label>With</label>' +
+				'<div class="five wide field">' +
+					'<div id="classInput" class="ui search">' +
+						'<input class="prompt" type="text" name="class" placeholder="object/scene">' +
+						'<div class="results"></div>' +
+					'</div>' +
+					'<label>object/scene</label>' +
+				'</div>' +
+				'<label>by</label>' +
+				'<div class="four wide field">' +
+					'<div id="personInput" class="ui search selection dropdown">' +
+						'<input type="hidden" name="person">' +
+						'<i class="dropdown icon"></i>' +
+						'<div class="default text">person</div>' +
+						'<div class="menu"></div>' +
+					'</div>' +
+					'<label>person</label>' +
+				'</div>' +
+				'<label>during</label>' +
+				'<div class="three wide field">' +
+					'<div id="periodInput" class="ui selection dropdown">' +
+						'<input type="hidden" name="period">' +
+						'<i class="dropdown icon"></i>' +
+						'<div class="default text">period</div>' +
+						'<div class="menu"></div>' +
+					'</div>' +
+					'<label>period.</label>' +
+				'</div>' +
+				'<div class="two wide field"></div>');
+	$.each(d['person'], function(i, item) {
+		$('#personInput .menu').append('<div class="item" data-value="' + item[0] + '">' + item[1] + '</div>');
+	});
+	$.each(d['period'], function(i, item) {
+		$('#periodInput .menu').append('<div class="item" data-value="' + item[0] + '">' + item[1] + '</div>');
+	});
+	$('.ui.search').search({ source: d['class'] });
 	$('.ui.dropdown').dropdown();
 	processFunc();
 }
