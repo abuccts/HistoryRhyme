@@ -69,7 +69,7 @@
 						$('.ui.dropdown').dropdown('clear');
 					});
 					$('#submitBtn').click(function() {
-						var resultUrl = 'result.php?';
+						var resultUrl = 'result.html?kw=1&';
 						var query = fields.map(function(field) {
 							return field + '=' + $('#queryForm').form('get value', field);
 						});

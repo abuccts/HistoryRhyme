@@ -61,23 +61,34 @@
 		var pageItemNum = 4;
 		
 		$(document).ready(function() {
-			var url = window.location.href;
-
-			var query = fields.map(function(field) {
-				return parseUri(url).queryKey[field];
-			});
-			
-			var query = {"class": "a", "person": 1};
+			var uri = window.location.href;
+			var kw = parseUri(uri).queryKey['kw'];
+				
+			if (kw == '1') {
+				var postData = {
+					"class": decodeURIComponent(parseUri(uri).queryKey['class']).replace(/ /g, '*'),
+					"person": parseUri(uri).queryKey['person'],
+					"period": parseUri(uri).queryKey['period']
+				};
+				var postUrl = "http://localhost:21230/kw1";
+			} else if (kw == '0') {
+				var postData = {
+					"tag": decodeURIComponent(parseUri(uri).queryKey['tag']).replace(/ /g, '*').split('|')
+				};
+				var postUrl = "http://localhost:21230/kw0";
+			} else {
+				alert('Something Error!');
+			}
 			
 			$.getJSON(querylistJsonUrl, function(d) {
 				querylistData = d;
 				var resultForm = new mkform($('#resultForm'), d, function() {
 					$.each(fields, function(id, field) {
 						if (id > 0) {
-							$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
+							//$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
 							$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
 						} else {
-							$('#resultForm').form('set value', 'class', query[id]);
+							//$('#resultForm').form('set value', 'class', query[id]);
 							$('#' + fields[id] + 'Input input').attr('disabled', true);
 						}
 					});
@@ -87,7 +98,7 @@
 			var pageNum = 0;
 			var totalPage = 0;
 			
-			$.post("http://localhost:21230/search", query, function(data) {
+			$.post(postUrl, postData, function(data) {
 				resultData = data;
 				if (resultData.length % pageItemNum == 0) {
 					totalPage = parseInt(resultData.length / pageItemNum);
