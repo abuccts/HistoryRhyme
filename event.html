@@ -31,7 +31,7 @@
 				<div id="tags"></div>
 				<p></p>
 				<div class="ui bottom right attached label">
-					<a><i class="search icon"></i><u>search similar events</u></a>
+					<a id="searchTag"><i class="search icon"></i><u>search similar events</u></a>
 				</div>
 			</div>
 		</div>
@@ -89,6 +89,15 @@
 					return '<li class="slide-img"><img src="' + imgUrl + '"  height="256" width="256"></li>';
 				});
 				var facetCascade = new ExtendedCarousel($('#facet'), d['facet'], facetCascadeCols, 'facet');
+			});
+			
+			$('#searchTag').click(function () {
+				var resultUrl = 'result.html?kw=0&';
+				var tags = $('#tags > button').filter('.active').map(function(i, val) {
+					return $(this).text();
+				}).toArray();
+				resultUrl += tags.join('|');
+				window.location.href = resultUrl;
 			});
 			
 		});	
