@@ -86,7 +86,7 @@
 				
 				var iconicCarousel = new Slide($('#iconic'), d['iconic'], iconicCarouselWidth, function(item) {
 					var imgUrl = commonUrls.imgRootUrl + item;
-					return '<li class="slide-img"><img src="' + imgUrl + '"></li>';
+					return '<li class="slide-img"><img src="' + imgUrl + '"  height="256" width="256"></li>';
 				});
 				var facetCascade = new ExtendedCarousel($('#facet'), d['facet'], facetCascadeCols, 'facet');
 			});

@@ -164,7 +164,7 @@ function ExtendedCarousel(rootEle, d, cols, param) {
 													' large label">' + img + '</a>');
 			} else {
 				$('#' + lightSliderId).append('<li data-thumb="' + commonUrls.imgRootUrl + img +
-											'"><img src="' + commonUrls.imgRootUrl + img + '"></li>');
+											'"><img src="' + commonUrls.imgRootUrl + img + '" height="256" width="256"></li>');
 			}
 		});
 	});
