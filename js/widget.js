@@ -1,6 +1,6 @@
 var commonUrls =
 {
-	imgRootUrl: 'http://222.29.193.172:8006/lmHistoryTMMSuppData/demo/imgs/'
+	imgRootUrl: 'http://222.29.193.172:8006/lmHistoryTMMData/img/imgs/'
 };
 
 
