@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	
 	<!-- Site Properties -->
-	<title>Demo</title>
+	<title>History Rhyme</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="css/lightslider.min.css">
@@ -17,24 +17,21 @@
 
 <body>
 	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header">Demo Design</h1>
+		<h1 class="ui header">History Rhyme</h1>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="twelve wide column">
 			<h4 id="descr" class="ui dividing header"></h4>
-			<div class="ui form">
-				<div class="fields">
-					<div class="one wide field">
-						<div class="ui circular large black label">Tags</div>
-					</div>
-					<div class="eleven wide field">
-						<div id="tags" class="inline fields"></div>
-					</div>
-					<div class="four wide field">
-						<a><i class="search icon"></i><u>search similar events</u></a>
-					</div>
+			<div class="ui raised segment">
+				<a class="ui black ribbon label">Tags</a>
+				<span><b>Choose tags to search similar history events</b></span>
+				<p></p>
+				<div id="tags"></div>
+				<p></p>
+				<div class="ui bottom right attached label">
+					<a><i class="search icon"></i><u>search similar events</u></a>
 				</div>
 			</div>
 		</div>
@@ -60,7 +57,7 @@
 	<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
 	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
-		var eventJsonRootUrl = 'json/';
+		var eventJsonRootUrl = 'json/event/';
 		
 		var eventData = undefined;
 		
@@ -76,7 +73,16 @@
 			
 			$.getJSON(eventJsonUrl, function(d) {
 				eventData = d;
-				var tags = new mktags([$('#tags'), $('#descr')], d);
+				var tags = new mktags([$('#tags'), $('#descr')], d, function() {
+					$('.button').click(function () {
+						if ($(this).hasClass('active')) {
+							$(this).removeClass('active');
+							$(this).hide().fadeIn('fast');
+						} else {
+							$(this).addClass('active');
+						}
+					});
+				});
 				
 				var iconicCarousel = new Slide($('#iconic'), d['iconic'], iconicCarouselWidth, function(item) {
 					var imgUrl = commonUrls.imgRootUrl + item;

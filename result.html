@@ -52,30 +52,31 @@
 	<script type="text/javascript" src="js/parseUri.js"></script>
 	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
+		var serverUrl = 'http://222.29.193.164:21237';
 		var querylistJsonUrl = 'json/querylist.json';
 		
 		var querylistData = undefined;
 		var resultData = undefined;
 		
 		var fields = ['class', 'person', 'period'];
-		var pageItemNum = 4;
+		var pageItemNum = 10;
 		
 		$(document).ready(function() {
 			var uri = window.location.href;
 			var kw = parseUri(uri).queryKey['kw'];
 				
-			if (kw == '1') {
+			if (kw == '0') {
+				var postUrl = serverUrl + '/kw0';
+				var postData = {
+					"tag": decodeURIComponent(parseUri(uri).queryKey['tag']).replace(/ /g, '*').split('|')
+				};
+			} else if (kw == '1') {
+				var postUrl = serverUrl + '/kw1';
 				var postData = {
 					"class": decodeURIComponent(parseUri(uri).queryKey['class']).replace(/ /g, '*'),
 					"person": parseUri(uri).queryKey['person'],
 					"period": parseUri(uri).queryKey['period']
 				};
-				var postUrl = "http://localhost:21230/kw1";
-			} else if (kw == '0') {
-				var postData = {
-					"tag": decodeURIComponent(parseUri(uri).queryKey['tag']).replace(/ /g, '*').split('|')
-				};
-				var postUrl = "http://localhost:21230/kw0";
 			} else {
 				alert('Something Error!');
 			}

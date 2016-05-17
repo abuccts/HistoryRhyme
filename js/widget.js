@@ -4,7 +4,7 @@ var commonUrls =
 };
 
 
-var tagColors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey'];
+var tagColors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown'];
 
 /*
 function mkform(rootEle, d, fields, processFunc) {
@@ -99,7 +99,7 @@ function mklist(rootEle, d, param) {
 	$.each(d.slice(startPos, endPos), function(i, eventItem) {
 		$itemDiv = $('<div class="item list-group-item"></div>');
 		$tags = $('<div class="right floated content"></div>');
-		$.each(eventItem['tag'], function(j, tagItem) {
+		$.each(eventItem['tag'].slice(0, 5), function(j, tagItem) {
 			var color = tagColors[tagItem.length % tagColors.length];
 			$tags.append('<div class="ui ' + color + ' label">' + tagItem + '</div>');
 		});
@@ -111,16 +111,15 @@ function mklist(rootEle, d, param) {
 }
 
 
-function mktags(rootEle, d) {
+function mktags(rootEle, d, processFunc) {
 	rootEle[0].html('');
 	rootEle[1].text(d['text']);
 	$.each(d['tag'], function(i, t) {
-		$eachTag = $('<div class="ui checkbox"></div>');
-		$eachTag.append('<input type="checkbox" name="tag">');
-		$eachTag.append('<label><a class="ui ' + tagColors[t.length % tagColors.length] + ' small label">' + t + '</a></label>');
-		$eachTag.checkbox('attach events', '.toggle.button');
-		rootEle[0].append($('<div class="field"></div>').append($eachTag));
+		$eachTag = $('<button class="ui inverted button">' + t + '</button>');
+		$eachTag.addClass(tagColors[t.length % tagColors.length]);
+		rootEle[0].append($eachTag);
 	});
+	processFunc();
 }
 
 
