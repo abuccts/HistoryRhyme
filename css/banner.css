@@ -3,11 +3,8 @@
     src: url(fonts/oldenglish.ttf);
 }
 
-#banner h1 {
-    font-family: oldEnglish;
-}
-
 #banner h1 a {
+    font-family: oldEnglish;
 	color: #fff;
 }
 
