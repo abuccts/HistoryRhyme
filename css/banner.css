@@ -6,3 +6,11 @@
 #banner h1 {
     font-family: oldEnglish;
 }
+
+#banner h1 a {
+	color: #fff;
+}
+
+body {
+    background: url("../img/bg.png") no-repeat;
+}
