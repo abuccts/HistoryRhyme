@@ -92,7 +92,7 @@
 			});
 			
 			$('#searchTag').click(function () {
-				var resultUrl = 'result.html?kw=0&';
+				var resultUrl = 'result.html?kw=0&tag=';
 				var tags = $('#tags > button').filter('.active').map(function(i, val) {
 					return $(this).text();
 				}).toArray();

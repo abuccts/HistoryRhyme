@@ -89,7 +89,7 @@
 							//$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
 							$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
 						} else {
-							//$('#resultForm').form('set value', 'class', query[id]);
+							$('#resultForm').form('set value', 'class', decodeURIComponent(parseUri(uri).queryKey['class']));
 							$('#' + fields[id] + 'Input input').attr('disabled', true);
 						}
 					});
