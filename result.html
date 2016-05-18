@@ -53,9 +53,9 @@
 	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
 		var serverUrl = 'http://222.29.193.164:21237';
-		var querylistJsonUrl = 'json/querylist.json';
+		var querylstJsonUrl = 'json/querylst.json';
 		
-		var querylistData = undefined;
+		var querylstData = undefined;
 		var resultData = undefined;
 		
 		var fields = ['class', 'person', 'period'];
@@ -71,6 +71,21 @@
 					"tag": decodeURIComponent(parseUri(uri).queryKey['tag']).replace(/ /g, '*').split('|')
 				};
 			} else if (kw == '1') {
+				$.getJSON(querylstJsonUrl, function(d) {
+					querylstData = d;
+					var resultForm = new mkform($('#resultForm'), d, function() {
+						$.each(fields, function(id, field) {
+							if (id > 0) {
+								//$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
+								$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
+							} else {
+								$('#resultForm').form('set value', 'class', decodeURIComponent(parseUri(uri).queryKey['class']));
+								$('#' + fields[id] + 'Input input').attr('disabled', true);
+							}
+						});
+					});
+				});
+				
 				var postUrl = serverUrl + '/kw1';
 				var postData = {
 					"class": decodeURIComponent(parseUri(uri).queryKey['class']).replace(/ /g, '*'),
@@ -81,20 +96,6 @@
 				alert('Something Error!');
 			}
 			
-			$.getJSON(querylistJsonUrl, function(d) {
-				querylistData = d;
-				var resultForm = new mkform($('#resultForm'), d, function() {
-					$.each(fields, function(id, field) {
-						if (id > 0) {
-							//$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
-							$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
-						} else {
-							$('#resultForm').form('set value', 'class', decodeURIComponent(parseUri(uri).queryKey['class']));
-							$('#' + fields[id] + 'Input input').attr('disabled', true);
-						}
-					});
-				});
-			});
 
 			var pageNum = 0;
 			var totalPage = 0;

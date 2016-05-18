@@ -52,17 +52,17 @@
 	<script type="text/javascript" src="js/semantic.min.js"></script>
 	<script type="text/javascript" src="js/widget.js"></script>
 	<script type="text/javascript">
-		var querylistJsonUrl = 'json/querylist.json';
+		var querylstJsonUrl = 'json/querylst.json';
 		var exampleJsonUrl = 'json/example.json';
 		
-		var querylistData = undefined;
+		var querylstData = undefined;
 		var exampleData = undefined;
 		
 		var fields = ['class', 'person', 'period'];
 		
 		$(document).ready(function() {
-			$.getJSON(querylistJsonUrl, function(d) {
-				querylistData = d;
+			$.getJSON(querylstJsonUrl, function(d) {
+				querylstData = d;
 				var queryForm = new mkform($('#queryForm'), d, function() {
 					$('#clearBtn').click(function() {
 						$('.ui.search input').val('');
