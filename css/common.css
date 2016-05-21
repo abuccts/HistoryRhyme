@@ -3,13 +3,33 @@
     src: url(fonts/oldenglish.ttf);
 }
 
-#banner a h1 {
+@font-face {
+  font-family: meieScript;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Meie Script'), local('MeieScript-Regular'), url(fonts/meie.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+#banner a h1{
     font-family: oldEnglish;
 }
 
-body {
-    background: url("../img/bgggg.jpg") repeat;
+#logo {
+	height: 1.3em;
+	width: 1.3em;
 }
+
+body {
+    background: url("../img/bg.jpg") repeat;
+}
+
+#quote, #quote span{
+	font-family: meieScript;
+	font-size: 48px;
+	color: black;
+}
+
 
 .white.header {
 	color: white;
@@ -21,12 +41,10 @@ label span {
 	font-size: medium;
 }
 
-#tags button {
+#tags button, #taggp button {
 	margin: 4px;
 	color: black;
 }
 
-#taggp button {
-	margin: 4px;
-	color: black;
-}
+
+

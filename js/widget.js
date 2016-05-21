@@ -39,8 +39,8 @@ function mkform(rootEle, d, processFunc) {
 	rootEle.html('<div class="two wide field"></div>' + 
 				'<label><span>With</span></label>' +
 				'<div class="five wide field">' +
-					'<div id="classInput" class="ui search">' +
-						'<input class="prompt" type="text" name="class" placeholder="object/scene">' +
+					'<div id="classInput" class="ui category search">' +
+						'<input class="prompt" type="text" name="class" placeholder="object/scene" onkeypress="if(event.keyCode == 13){$(\'#submitBtn\').click()}">' +
 						'<div class="results"></div>' +
 					'</div>' +
 					'<label><span>object/scene</span></label>' +
@@ -72,9 +72,30 @@ function mkform(rootEle, d, processFunc) {
 	$.each(d['period'], function(i, item) {
 		$('#periodInput .menu').append('<div class="item" data-value="' + item[0] + '">' + item[1] + '</div>');
 	});
-	$('.ui.search').search({ source: d['class'] });
+	
+	$('.ui.search').search({
+		source: d['class'],
+		searchFields: ['title', 'category'],
+		searchFullText: true,
+		error: {
+			noResults : "You can still search your own query keywords"
+		}
+	});
 	$('.ui.dropdown').dropdown();
 	processFunc();
+	
+	$('#clearBtn').click(function() {
+		$('.ui.search input').val('');
+		$('.ui.dropdown').dropdown('clear');
+	});
+	$('#submitBtn').click(function() {
+		var resultUrl = 'result.html?kw=1&';
+		var query = fields.map(function(field) {
+			return field + '=' + rootEle.form('get value', field);
+		});
+		resultUrl += query.join('&');
+		window.location.href = resultUrl;
+	});
 }
 
 
