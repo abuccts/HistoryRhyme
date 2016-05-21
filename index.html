@@ -38,7 +38,10 @@
 		<div class="twelve wide column">
 			<table class="ui selectable fixed table">
 				<thead><tr>
-					<th><a class="ui blue tag label">Query Example</a></th><th></th><th></th>
+					<th colspan="3">
+						<a class="ui blue tag label">Query Example</a>
+						<span>&nbsp;&nbsp;Hint: one or more fields are both acceptable.</span>
+					</th>
 				</tr></thead>
 				<tbody id="queryExampleTable"></tbody>
 			</table>
@@ -83,7 +86,9 @@
 				var queryExampleTable = new mktable($('#queryExampleTable'), d, function(i) {
 					$.each(i, function(id, item) {
 						if (id > 0) {
-							$('#' + fields[id] + 'Input').dropdown('set selected', item[0]);
+							if (item[0] > -1) {
+								$('#' + fields[id] + 'Input').dropdown('set selected', item[0]);
+							}
 						} else {
 							$('#queryForm').form('set value', 'class', item[1]);
 						}
