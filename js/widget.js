@@ -122,7 +122,7 @@ function mklist(rootEle, d, param) {
 		$tags = $('<div class="right floated content"></div>');
 		$.each(eventItem['tag'].slice(0, 5), function(j, tagItem) {
 			var color = tagColors[tagItem.length % tagColors.length];
-			$tags.append('<div class="ui ' + color + ' label">' + tagItem + '</div>');
+			$tags.append('<div class="ui ' + color + ' label">' + tagItem.replace(/_/g, ' ') + '</div>');
 		});
 		$itemDiv.append($tags);
 		$itemDiv.append('<a href="event.html?eid=' + eventItem['eid'] + '" class="list-link" target="_blank">&nbsp;</a>' +
@@ -185,7 +185,7 @@ function ExtendedCarousel(rootEle, d, cols, param) {
 		$.each(field, function(j, img) {
 			if ( !j && img.indexOf('jpg') == -1 ) {
 				$('#' + lightSliderId).prev().html('<a class="ui default' +  //tagColors[img.length % tagColors.length] +
-													' large label">' + img + '</a>');
+													' large label">' + img.replace(/_/g, ' ') + '</a>');
 			} else {
 				$('#' + lightSliderId).append('<li data-thumb="' + commonUrls.imgRootUrl + img +
 											'"><img src="' + commonUrls.imgRootUrl + img + '" height="256" width="256"></li>');

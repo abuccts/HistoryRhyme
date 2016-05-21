@@ -70,7 +70,7 @@
 				$('#res').html('');
 				$taggp = $('<div id="taggp"></div>');
 				$.each(tagDat.split('|'), function(i, item) {
-					$taggp.append('<button class="ui inverted grey button active">' + item.replace('_', ' ') + '</button>');
+					$taggp.append('<button class="ui inverted grey button active">' + item.replace(/_/g, ' ') + '</button>');
 				});
 				$('#res').append($taggp);
 				
