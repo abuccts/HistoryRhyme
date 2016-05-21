@@ -10,22 +10,20 @@
 	<title>History Rhyme</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="css/banner.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/result.css">
 </head>
 
 <body>
 	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header"><a href="/HistoryRhyme">History Rhyme</a></h1>
+		<a href="/HistoryRhyme"><h1 class="ui grey inverted huge header">History Rhyme</h1></a>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="column">
-			<h2 class="ui dividing header">Result about hitory events</h2>
-			<div class="ui form">
-				<div id="resultForm" class="inline fields"></div>
-			</div>
+			<h2 class="ui dividing white header">Result about hitoric events</h2>
+			<div id="res"></div>
 		</div>
 		
 		<div class="column">
@@ -59,28 +57,49 @@
 		var resultData = undefined;
 		
 		var fields = ['class', 'person', 'period'];
-		var pageItemNum = 10;
+		var pageItemNum = 12;
 		
 		$(document).ready(function() {
 			var uri = window.location.href;
 			var kw = parseUri(uri).queryKey['kw'];
 				
 			if (kw == '0') {
+				var tagDat = decodeURIComponent(parseUri(uri).queryKey['tag']);
+				$('#res').addClass('ui basic segment');
+				$('#res').html('');
+				$taggp = $('<div id="taggp"></div>');
+				$.each(tagDat.split('|'), function(i, item) {
+					$taggp.append('<button class="ui inverted grey button active">' + item.replace('_', ' ') + '</button>');
+				});
+				$('#res').append($taggp);
+				
 				var postUrl = serverUrl + '/kw0';
 				var postData = {
-					"tag": decodeURIComponent(parseUri(uri).queryKey['tag']).replace(/ /g, '*').split('|')
+					"tag": tagDat.replace(/ /g, '*').split('|')
 				};
+				
 			} else if (kw == '1') {
+				var classDat = decodeURIComponent(parseUri(uri).queryKey['class']);
+				$('#res').addClass('ui form');
+				$('#res').html('<div id="resultForm" class="inline fields"></div>');
+				$btngrid = $('<div class="ui center aligned padded grid">');
+				$btngrid.append('<div class="ui buttons">' +
+								'<button id="submitBtn" class="ui positive button">Submit</button>' +
+								'<div class="or"></div>' +
+								'<button id="clearBtn" class="ui button">Clear</button>' +
+								'</div>');
+				$('#res').append($btngrid);
+			
 				$.getJSON(querylstJsonUrl, function(d) {
 					querylstData = d;
 					var resultForm = new mkform($('#resultForm'), d, function() {
 						$.each(fields, function(id, field) {
 							if (id > 0) {
-								//$('#' + fields[id] + 'Input').dropdown('set selected', query[id]);
-								$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
+								$('#' + fields[id] + 'Input').dropdown('set selected', parseUri(uri).queryKey[field]);
+								//$('#' + fields[id] + 'Input').closest('div').addClass('disabled');
 							} else {
-								$('#resultForm').form('set value', 'class', decodeURIComponent(parseUri(uri).queryKey['class']));
-								$('#' + fields[id] + 'Input input').attr('disabled', true);
+								$('#resultForm').form('set value', 'class', classDat);
+								//$('#' + fields[id] + 'Input input').attr('disabled', true);
 							}
 						});
 					});
@@ -88,7 +107,7 @@
 				
 				var postUrl = serverUrl + '/kw1';
 				var postData = {
-					"class": decodeURIComponent(parseUri(uri).queryKey['class']).replace(/ /g, '*'),
+					"class": classDat.replace(/ /g, '*'),
 					"person": parseUri(uri).queryKey['person'],
 					"period": parseUri(uri).queryKey['period']
 				};

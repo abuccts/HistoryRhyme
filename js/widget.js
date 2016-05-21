@@ -37,15 +37,15 @@ function mkform(rootEle, d, fields, processFunc) {
 
 function mkform(rootEle, d, processFunc) {
 	rootEle.html('<div class="two wide field"></div>' + 
-				'<label>With</label>' +
+				'<label><span>With</span></label>' +
 				'<div class="five wide field">' +
 					'<div id="classInput" class="ui search">' +
 						'<input class="prompt" type="text" name="class" placeholder="object/scene">' +
 						'<div class="results"></div>' +
 					'</div>' +
-					'<label>object/scene</label>' +
+					'<label><span>object/scene</span></label>' +
 				'</div>' +
-				'<label>by</label>' +
+				'<label><span>by</span></label>' +
 				'<div class="four wide field">' +
 					'<div id="personInput" class="ui search selection dropdown">' +
 						'<input type="hidden" name="person">' +
@@ -53,9 +53,9 @@ function mkform(rootEle, d, processFunc) {
 						'<div class="default text">person</div>' +
 						'<div class="menu"></div>' +
 					'</div>' +
-					'<label>person</label>' +
+					'<label><span>person</span></label>' +
 				'</div>' +
-				'<label>during</label>' +
+				'<label><span>during</span></label>' +
 				'<div class="three wide field">' +
 					'<div id="periodInput" class="ui selection dropdown">' +
 						'<input type="hidden" name="period">' +
@@ -63,7 +63,7 @@ function mkform(rootEle, d, processFunc) {
 						'<div class="default text">period</div>' +
 						'<div class="menu"></div>' +
 					'</div>' +
-					'<label>period.</label>' +
+					'<label><span>period.</span></label>' +
 				'</div>' +
 				'<div class="two wide field"></div>');
 	$.each(d['person'], function(i, item) {
@@ -115,8 +115,8 @@ function mktags(rootEle, d, processFunc) {
 	rootEle[0].html('');
 	rootEle[1].text(d['text']);
 	$.each(d['tag'], function(i, t) {
-		$eachTag = $('<button class="ui inverted button">' + t + '</button>');
-		$eachTag.addClass(tagColors[t.length % tagColors.length]);
+		$eachTag = $('<button class="ui inverted grey button">' + t + '</button>');
+		//$eachTag.addClass(tagColors[t.length % tagColors.length]);
 		rootEle[0].append($eachTag);
 	});
 	processFunc();
@@ -129,6 +129,9 @@ function Slide(rootEle, d, itemDisplayNum, processFunc) {
 	$.each(d, function(i, field) {
 		rootEle.children('ul').append(processFunc(field));
 	});
+	if (d.length < itemDisplayNum) {
+		itemDisplayNum = d.length;
+	}
 	var autoplaySlider = $('#slide').lightSlider({
 		item: itemDisplayNum,
 		easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
@@ -160,7 +163,7 @@ function ExtendedCarousel(rootEle, d, cols, param) {
 		rootEle.append('<div class="cascade-item"><h3 align="center"></h3><ul id=' + lightSliderId + '></ul></div>');
 		$.each(field, function(j, img) {
 			if ( !j && img.indexOf('jpg') == -1 ) {
-				$('#' + lightSliderId).prev().html('<a class="ui ' + tagColors[img.length % tagColors.length] +
+				$('#' + lightSliderId).prev().html('<a class="ui default' +  //tagColors[img.length % tagColors.length] +
 													' large label">' + img + '</a>');
 			} else {
 				$('#' + lightSliderId).append('<li data-thumb="' + commonUrls.imgRootUrl + img +

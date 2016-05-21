@@ -10,27 +10,25 @@
 	<title>History Rhyme</title>
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="css/banner.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
 </head>
 
 <body>
-	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header"><a href="/HistoryRhyme">History Rhyme</a></h1>
+	<div id="banner" class="ui inverted segment">
+		<a href="/HistoryRhyme"><h1 class="ui grey inverted huge header">History Rhyme</h1></a>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="column">
-			<h2 class="ui dividing header">Search history events </h2>
+			<h2 class="ui dividing white header">Search historic events </h2>
 			<div class="ui form">
 				<div id="queryForm" class="inline fields"></div>
-				<div class="ui grid">
-					<div class="center aligned column">
-						<div class="ui buttons">
-							<button id="submitBtn" class="ui positive button">Submit</button>
-							<div class="or"></div>
-							<button id="clearBtn" class="ui button">Clear</button>
-						</div>
+				<div class="ui center aligned padded grid">
+					<div class="ui buttons">
+						<button id="submitBtn" class="ui positive button">Submit</button>
+						<div class="or"></div>
+						<button id="clearBtn" class="ui button">Clear</button>
 					</div>
 				</div>
 			</div>
@@ -44,6 +42,14 @@
 				<tbody id="queryExampleTable"></tbody>
 			</table>
 		</div>
+		
+		<div class="center aligned column">
+		<div class="ui huge statistic">
+    <div class="text value">
+      History doesn't repeat itself, but it does rhyme.
+    </div>
+  </div>
+  </div>
 	
 	</div>
 

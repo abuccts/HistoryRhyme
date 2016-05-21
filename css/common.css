@@ -1,0 +1,32 @@
+@font-face {
+    font-family: oldEnglish;
+    src: url(fonts/oldenglish.ttf);
+}
+
+#banner a h1 {
+    font-family: oldEnglish;
+}
+
+body {
+    background: url("../img/bgggg.jpg") repeat;
+}
+
+.white.header {
+	color: white;
+}
+
+label span {
+	color: black;
+	font-family: Georgia;
+	font-size: medium;
+}
+
+#tags button {
+	margin: 4px;
+	color: black;
+}
+
+#taggp button {
+	margin: 4px;
+	color: black;
+}

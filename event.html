@@ -11,38 +11,48 @@
 	
 	<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="css/lightslider.min.css">
-	<link rel="stylesheet" type="text/css" href="css/banner.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/event.css">
 </head>
 
 <body>
 	<div id="banner" class="ui basic left aligned inverted segment">
-		<h1 class="ui header"><a href="/HistoryRhyme">History Rhyme</a></h1>
+		<a href="/HistoryRhyme"><h1 class="ui grey inverted huge header">History Rhyme</h1></a>
 	</div>
 	
 	<div class="ui one column doubling stackable centered grid container">
 	
 		<div class="twelve wide column">
-			<h4 id="descr" class="ui dividing header"></h4>
-			<div class="ui raised segment">
-				<a class="ui black ribbon label">Tags</a>
-				<span><b>Choose tags to search similar history events</b></span>
-				<p></p>
-				<div id="tags"></div>
-				<p></p>
-				<div class="ui bottom right attached label">
-					<a id="searchTag"><i class="search icon"></i><u>search similar events</u></a>
+			<div class="ui secondary stacked segment">
+				<h4 id="descr" class="ui header"></h4>
+				<div class="ui segments">
+					<div class="ui raised segment">
+						<a class="ui black ribbon label">Tags</a>
+						<span><b>Choose tags to search similar historic events</b></span>
+						<p></p>
+						<div id="tags"></div>
+						<p></p>
+						<!--div class="ui bottom right attached label">
+							<a id="searchTag"><i class="search icon"></i><u>search similar events</u></a>
+						</div-->
+					</div>
+				</div>
+				<div class="ui center aligned padded grid">
+					<div class="ui center aligned buttons">
+						<button id="searchBtn" class="ui positive button"><i class="search icon"></i>Search similar events</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="center aligned column">
-			<h2 class="ui header">Famous Photos</h1>
+			<p></p>
+			<h2 class="ui header"><span class="info"><i class="photo icon"></i>Famous Photos</span></h2>
 			<div id="iconic"></div>
 		</div>
 		
 		<div class="column">
-			<div class="facet-info">Facets</div>
+			<h2 class="ui left aligned header"><span class="info"><i class="list layout icon"></i>Facets</span></h2>
 			<div id="facet" ></div>
 		</div>
 
@@ -74,7 +84,7 @@
 			$.getJSON(eventJsonUrl, function(d) {
 				eventData = d;
 				var tags = new mktags([$('#tags'), $('#descr')], d, function() {
-					$('.button').click(function () {
+					$('#tags .button').click(function () {
 						if ($(this).hasClass('active')) {
 							$(this).removeClass('active');
 							$(this).hide().fadeIn('fast');
@@ -91,7 +101,7 @@
 				var facetCascade = new ExtendedCarousel($('#facet'), d['facet'], facetCascadeCols, 'facet');
 			});
 			
-			$('#searchTag').click(function () {
+			$('#searchBtn').click(function () {
 				var resultUrl = 'result.html?kw=0&tag=';
 				var tags = $('#tags > button').filter('.active').map(function(i, val) {
 					return $(this).text();
