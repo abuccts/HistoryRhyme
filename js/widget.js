@@ -106,6 +106,7 @@ function mktable(rootEle, d, clickFunc) {
 			$trow.append('<td>' + item[1] + '</td>');
 		});
 		$trow.click(function() {
+			$('#clearBtn').click();
 			clickFunc(field);
 		});
 		rootEle.append($trow);

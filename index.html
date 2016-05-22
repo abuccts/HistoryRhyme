@@ -85,12 +85,12 @@
 				exampleData = d;
 				var queryExampleTable = new mktable($('#queryExampleTable'), d, function(i) {
 					$.each(i, function(id, item) {
-						if (id > 0) {
-							if (item[0] > -1) {
+						if (item[0] > -1) {
+							if (id > 0) {
 								$('#' + fields[id] + 'Input').dropdown('set selected', item[0]);
+							} else {
+								$('#queryForm').form('set value', 'class', item[1]);
 							}
-						} else {
-							$('#queryForm').form('set value', 'class', item[1]);
 						}
 					});
 				});
